@@ -1,1 +1,1 @@
-# socialAPI
+# social-api
