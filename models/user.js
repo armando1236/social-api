@@ -1,40 +1,51 @@
-const { Schema, model } = require('mongoose');
+const {Schema, model} = require('mongoose');
 
-// Schema to create a course model
-const courseSchema = new Schema(
+const userSchema = new Schema(
   {
-    courseName: {
+    username: {
       type: String,
       required: true,
+      trim: true,
+      unique: true
     },
-    inPerson: {
-      type: Boolean,
-      default: true,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: function (v){
+          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+        },
+        message: "Please enter a valid email"
+      }
     },
-    startDate: {
-      type: Date,
-      default: Date.now(),
-    },
-    endDate: {
-      type: Date,
-      // Sets a default value of 12 weeks from now
-      default: () => new Date(+new Date() + 84 * 24 * 60 * 60 * 1000),
-    },
-    students: [
+    thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Student',
-      },
+        ref: 'Thoughts'
+      }
     ],
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ]
   },
   {
-    toJSON: {
-      virtuals: true,
-    },
-    id: false,
+    toJSON:{
+      virtuals: true
+    }
   }
 );
 
-const Course = model('course', courseSchema);
 
-module.exports = Course;
+
+userSchema.virtual('friendCount').get(function () {
+  return this.friends.length;
+});
+
+
+const user = model('user', userSchema);
+
+module.exports = user;
