@@ -16,8 +16,9 @@ const {
 router.route('/').get(getThoughts).post(createThoughts);
 
 // /api/courses/:courseId
-router.route('/:id')
+router.route('/:thoughtId')
   .get(getThoughtById)
+  // same for userRoute.put
   .put(updateThoughts)
   .delete(deleteThoughts);
 

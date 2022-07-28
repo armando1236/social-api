@@ -1,17 +1,27 @@
 
+const req = require('express/lib/request');
 const { User, Thoughts } = require('../models');
 
 
 const User= async () =>
   getUsers (req, res)
-    User.find({})
-      .populate({
-        path: 'thoughts',
-        select: '-__v'
-      })
-      .populate({
-        
-      })
+    User.find({_id:req.params.id})
+      .select('-__v')
+
+
+
+
+
+      // .populate({
+      //   path: 'thoughts',
+      //   select: '-__v'
+      // })
+      // .populate({
+      //   path: 'friends',
+      //   select: '-__v'
+      // })
+      // .select('-__v')
+      // .them
 
 
 

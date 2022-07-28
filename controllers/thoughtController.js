@@ -40,19 +40,25 @@ module.exports = {
   },
   
   deleteThoughts(req, res) {
+    // check if its thoughtId
     Thought.findOneAndDelete({ _id: req.params.id })
-      .then(({username}) => {
+      .then((thoughtData) => {
+        if(!thoughtData) {
+          return res.status(404).json({message: 'No thought with ID'})
+        }
         return User.findOneAndUpdate(
           // update username 
-          {username:  username},
-          { $push: {thoughts: params.id} },
+          {thoughts: req.params.thoughtId},
+          { $pull: {thoughts: req.params.thoughtId} },
           {new: true }
         )
         
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : Student.deleteMany({ _id: { $in: course.students } })
         })
-      .then(() => res.json({ message: 'Course and students deleted!' }))
+      .then((userData) => {
+        if(!userData) {
+          return res.status(404).json({message: 'No user with ID'})
+        }
+        res.json({ message: 'thought deleted!' })})
       .catch((err) => res.status(500).json(err));
   },
 
@@ -62,13 +68,12 @@ module.exports = {
       { $set: req.body },
       { runValidators: true, new: true }
     )
-      .then((course) =>
-        !course
+      .then((thought) =>
+        !Thought
           ? res.status(404).json({ message: 'No thoughts with this id!' })
-          : res.json(course)
+          : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
 
-  deleteThoughts
-};
+
