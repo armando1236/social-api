@@ -1,7 +1,7 @@
 # social-api
 ***
 ## Description
-For this project I had build the back end for a social media application. The routes had to be tested using Insomnia. I had routes for the users, thoughts, reactions, and friends. 
+For this project I had build the back end for a social media application. The routes had to be tested using Insomnia. I had routes for the users, thoughts, reactions, and friends. This project was useful becuase I know I will use these routes in the future.
 ***
 ## Table of Contents
 - [Installation](#installation)
