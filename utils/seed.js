@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { user, thought } = require('../models');
+const { User, Thoughts } = require('../models');
 
 
 connection.on('error', (err) => err);
@@ -8,10 +8,10 @@ connection.once('open', async () => {
   console.log('connected');
 
   // Drop existing courses
-  await user.deleteMany({});
+  await User.deleteMany({});
 
   // Drop existing students
-  await thought.deleteMany({});
+  await Thoughts.deleteMany({});
 
   
 
